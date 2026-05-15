@@ -1,3 +1,5 @@
+
+
 public class Exercises {
     /**
      * Returns a count of how many nodes are in the linked list.
@@ -12,7 +14,16 @@ public class Exercises {
      * @return the length of the list
      */
     public static int length(ListNode head) {
-        return -1;
+
+        int count = 0;
+        
+        ListNode current = head;
+
+        while(current != null){
+            count++;
+            current = current.next;
+        }
+        return count;
     }
 
     /**
@@ -29,7 +40,9 @@ public class Exercises {
      * @return the new head of the linked list
      */
     public static ListNode prepend(ListNode head, int toAdd) {
-        return null;
+        ListNode node = new ListNode(toAdd);
+        node.next = head;
+        return node;
     }
 
     /**
@@ -45,7 +58,19 @@ public class Exercises {
      * @return the head of the list with the last element removed
      */
     public static ListNode removeLast(ListNode head) {
-        return null;
+        if(head == null || head.next == null){
+            return null;
+        }
+        ListNode cur = head;
+        ListNode dummy = cur;
+
+        while (cur.next.next!=null) { 
+            cur = cur.next;
+        }
+        cur.next = null;
+        head = dummy;
+
+        return head;
     }
 
     /**
@@ -60,7 +85,14 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+        int min = Integer.MAX_VALUE;
+        ListNode cur = head;
+
+        while(cur != null){ 
+            min = Math.min(min, cur.data);
+            cur = cur.next;
+        }
+        return min;
     }
 
     /**
@@ -81,7 +113,31 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+        if(head == null || head.next == null){
+            return null;
+        }
+        int min = head.data;
+        ListNode cur = head;
+
+        while(cur != null){ 
+            min = Math.min(min, cur.data);
+            cur = cur.next;
+        }
+        System.out.println(min);
+
+        ListNode node = new ListNode(0);
+        ListNode node2 = node;
+        while (head!= null) { 
+            if (head.data == min) {
+                node.next = head.next;
+                return node2.next;
+
+            }
+            node.next = new ListNode(head.data);
+            head = head.next;
+            node = node.next;
+        }
+        return node2.next;
     }
 
     /**
@@ -105,7 +161,21 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+        if(smallList == null && bigList == null){
+            return true;
+        }
+
+        while (smallList!=null && bigList !=null) { 
+            if (smallList.data * 2 != bigList.data) {
+                return false;
+            }
+            smallList = smallList.next;
+            bigList = bigList.next;
+        }
+        if( bigList != null || smallList !=null){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -123,6 +193,50 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+        if(head == null){
+            return null;
+        }
+        if(head.next == null){
+            return head;
+        }
+        int size = 0;
+        ListNode s = head;
+
+        while(s!=null){
+            size++;
+            s = s.next;
+        }
+
+        if(k == size){
+            return head;
+        }
+        if(k > size){
+            k = k%size;
+        }
+
+        ListNode head2 = head;
+        ListNode dummy2 = new ListNode(head2.data);
+        ListNode dummy = dummy2;
+        
+        for(int i = 0; i < k ; i++){
+            dummy2.next = new ListNode(head2.data);    
+            dummy2 = dummy2.next;
+            head = head.next;
+            head2 = head2.next;
+
+            System.out.println(dummy2.data + " | D2");
+        }
+
+        ListNode head3 = head2;
+        while(head3.next != null){
+
+            head3 = head3.next;
+            System.out.println(head3.data + " | H3");
+
+        }
+        
+        head3.next = dummy.next;
+
+        return head2;
     }
 }
