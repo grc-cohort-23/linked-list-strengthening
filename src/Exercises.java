@@ -57,6 +57,7 @@ public class Exercises {
      * @return the head of the list with the last element removed
      */
     public static ListNode removeLast(ListNode head) {
+        if(length(head)<2) return null;
         ListNode cur = head;
         while(cur.next.next !=null){
             cur = cur.next;
@@ -77,7 +78,15 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+
+        int min = Integer.MAX_VALUE;
+
+        ListNode cur = head;
+        while(cur!=null){
+            if(cur.data<min) min = cur.data;
+            cur= cur.next;
+        }
+        return min;
     }
 
     /**
@@ -98,7 +107,19 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+        if(length(head)<2) return null;
+        int toRemove = min(head);
+        ListNode cur = head;
+        if(cur.data == toRemove) return cur.next;
+
+        while(cur!=null){
+            if(cur.next.data==toRemove) {
+                cur.next = cur.next.next;
+                break;
+            }
+            cur=cur.next;
+        }
+        return head;
     }
 
     /**
@@ -122,7 +143,18 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+        if(length(smallList) != length(bigList)) return false;
+        
+        ListNode smallCur = smallList;
+        ListNode bigCur = bigList;
+        
+        while (smallCur!=null) {
+            if(smallCur.data*2!=bigCur.data) return false;
+            smallCur = smallCur.next;
+            bigCur = bigCur.next;
+        }
+
+        return true;
     }
 
     /**
@@ -140,6 +172,23 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+        if(length(head)<2) return head;
+        if(k==0) return head;
+
+        ListNode cur = head;
+
+        //linked the end of the list to the start of the list
+        while (cur.next!=null) {
+            cur = cur.next;
+        }
+        cur.next = head;
+        //getting to the last possition
+        ListNode last = head;
+        for(int i  = 0; i<k-1; i++){
+           last = last.next;
+        }
+        ListNode newHead = last.next;
+        last.next = null;
+        return newHead;
     }
 }
