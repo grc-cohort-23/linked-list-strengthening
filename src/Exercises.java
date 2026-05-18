@@ -12,7 +12,13 @@ public class Exercises {
      * @return the length of the list
      */
     public static int length(ListNode head) {
-        return -1;
+        int count = 0;
+        ListNode current = head;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
     }
 
     /**
@@ -29,7 +35,8 @@ public class Exercises {
      * @return the new head of the linked list
      */
     public static ListNode prepend(ListNode head, int toAdd) {
-        return null;
+     return new ListNode(toAdd, head);
+
     }
 
     /**
@@ -45,7 +52,15 @@ public class Exercises {
      * @return the head of the list with the last element removed
      */
     public static ListNode removeLast(ListNode head) {
-        return null;
+        if (head == null || head.next == null) {
+            return null;
+    }
+     ListNode current = head;
+        while (current.next.next != null) {
+            current = current.next;
+        }
+        current.next = null;
+        return head;
     }
 
     /**
@@ -60,7 +75,18 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+   if (head == null) {
+            return Integer.MAX_VALUE;
+        }
+        int minValue = head.data;
+        ListNode current = head.next;
+        while (current != null) {
+            if (current.data < minValue) {
+                minValue = current.data;
+            }
+            current = current.next;
+        }
+        return minValue;
     }
 
     /**
@@ -81,7 +107,19 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+      if (head == null || head.next == null) {
+            return null;
+        }
+        int minValue = min(head);
+        if (head.data == minValue) {
+            return head.next;
+        }
+        ListNode current = head;
+        while (current.next.data != minValue) {
+            current = current.next;
+        }
+        current.next = current.next.next;
+        return head;
     }
 
     /**
@@ -105,7 +143,25 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+         //list 1: 4 -> 3 -> 9
+        //list 2: 8 -> 6 -> 18
+        //s = small
+        // b = big
+
+        //while s and b are not null
+        // if b.data != s.data * 2, return false
+        //move s and b to the next node
+
+        ListNode s = smallList; 
+        ListNode b = bigList;
+        while (s != null && b != null) {
+            if (b.data != s.data * 2) {
+                return false;
+            }
+            s = s.next; // Move to the next node in smallList
+            b = b.next; // Move to the next node in bigList
+        }
+        return s == null && b == null; // Check if both lists have been fully traversed
     }
 
     /**
@@ -123,6 +179,35 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+
+        // if head is null or has only one element, or k is 0, return head
+        // find the length of the list
+        // k = k % length
+        // if k is 0, return head
+        // find the new head by moving k-1 times from the current head
+        // set the next of the current node to null
+        // find the tail of the new head and set its next to the old head
+
+         if (head == null || head.next == null || k == 0) {
+            // If the list is empty, has only one element, or k is 0, no rotation is needed
+            return head; // Return the original head
+        }
+        int len = length(head); // Find the length of the list
+        k = k % len; //where k is greater than the length of the list
+        if (k == 0) {
+            return head; 
+        }
+        ListNode current = head;
+        for (int i = 0; i < k - 1; i++) { // Move k-1 times to find the new head
+            current = current.next;
+        }
+        ListNode newHead = current.next; // The new head is the next node after the current node
+        current.next = null;
+        ListNode tail = newHead;
+        while (tail.next != null) { // Find the tail of the new head
+            tail = tail.next;
+        }
+        tail.next = head; // Set the next of the tail to the old head
+        return newHead; // Return the new head after rotation
+        }
     }
-}
