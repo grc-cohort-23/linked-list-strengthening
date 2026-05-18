@@ -151,7 +151,7 @@ public class Exercises {
         //while s and b are not null
         // if b.data != s.data * 2, return false
         //move s and b to the next node
-        
+
         ListNode s = smallList; 
         ListNode b = bigList;
         while (s != null && b != null) {
@@ -179,6 +179,35 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+
+        // if head is null or has only one element, or k is 0, return head
+        // find the length of the list
+        // k = k % length
+        // if k is 0, return head
+        // find the new head by moving k-1 times from the current head
+        // set the next of the current node to null
+        // find the tail of the new head and set its next to the old head
+
+         if (head == null || head.next == null || k == 0) {
+            // If the list is empty, has only one element, or k is 0, no rotation is needed
+            return head; // Return the original head
+        }
+        int len = length(head); // Find the length of the list
+        k = k % len; //where k is greater than the length of the list
+        if (k == 0) {
+            return head; 
+        }
+        ListNode current = head;
+        for (int i = 0; i < k - 1; i++) { // Move k-1 times to find the new head
+            current = current.next;
+        }
+        ListNode newHead = current.next; // The new head is the next node after the current node
+        current.next = null;
+        ListNode tail = newHead;
+        while (tail.next != null) { // Find the tail of the new head
+            tail = tail.next;
+        }
+        tail.next = head; // Set the next of the tail to the old head
+        return newHead; // Return the new head after rotation
+        }
     }
-}
