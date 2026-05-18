@@ -107,7 +107,19 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+      if (head == null || head.next == null) {
+            return null;
+        }
+        int minValue = min(head);
+        if (head.data == minValue) {
+            return head.next;
+        }
+        ListNode current = head;
+        while (current.next.data != minValue) {
+            current = current.next;
+        }
+        current.next = current.next.next;
+        return head;
     }
 
     /**
@@ -131,7 +143,25 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+         //list 1: 4 -> 3 -> 9
+        //list 2: 8 -> 6 -> 18
+        //s = small
+        // b = big
+
+        //while s and b are not null
+        // if b.data != s.data * 2, return false
+        //move s and b to the next node
+        
+        ListNode s = smallList; 
+        ListNode b = bigList;
+        while (s != null && b != null) {
+            if (b.data != s.data * 2) {
+                return false;
+            }
+            s = s.next; // Move to the next node in smallList
+            b = b.next; // Move to the next node in bigList
+        }
+        return s == null && b == null; // Check if both lists have been fully traversed
     }
 
     /**
