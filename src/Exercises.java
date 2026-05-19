@@ -157,7 +157,16 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+        while (smallList != null && bigList != null) {
+            if (bigList.data != smallList.data * 2) {
+                return false;
+            }
+
+            smallList = smallList.next;
+            bigList = bigList.next;
+        }
+
+        return smallList == null && bigList == null;
     }
 
     /**
@@ -175,6 +184,22 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        for (int i = 0; i < k; i++) {
+            ListNode oldHead = head;
+            head = head.next;
+            oldHead.next = null;
+            ListNode current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+
+            current.next = oldHead;
+        }
+
+        return head;
     }
 }
