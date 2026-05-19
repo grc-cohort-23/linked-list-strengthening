@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSException;
+
 public class Exercises {
     /**
      * Returns a count of how many nodes are in the linked list.
@@ -12,7 +14,15 @@ public class Exercises {
      * @return the length of the list
      */
     public static int length(ListNode head) {
-        return -1;
+        
+        int count = 0;
+        ListNode current = head;
+        
+        while (current != null){
+            count++;
+            current = current.next;
+        }
+        return count;
     }
 
     /**
@@ -29,7 +39,9 @@ public class Exercises {
      * @return the new head of the linked list
      */
     public static ListNode prepend(ListNode head, int toAdd) {
-        return null;
+        ListNode newValue = new ListNode(toAdd);
+        newValue.next = head;
+        return newValue;
     }
 
     /**
@@ -45,7 +57,16 @@ public class Exercises {
      * @return the head of the list with the last element removed
      */
     public static ListNode removeLast(ListNode head) {
-        return null;
+
+        if (head == null || head.next == null) {
+            return null;
+        }
+        ListNode current = head;
+        while (current.next.next != null) {
+            current = current.next;
+        }
+        current.next = null;
+        return head;
     }
 
     /**
@@ -60,7 +81,18 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+        if (head == null) {
+            return Integer.MAX_VALUE;
+        }
+        int minValue = head.data;
+        ListNode current = head.next;
+        while (current != null) {
+            if (current.data < minValue) {
+                minValue = current.data;
+            }
+            current = current.next;
+        }
+        return minValue;
     }
 
     /**
@@ -81,7 +113,21 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+            if (head == null || head.next == null) {
+                return null;
+            }
+        int minValue = min(head);
+        if (head.data == minValue) {
+            return head.next;
+        }
+        ListNode current = head;
+        while (current.next != null && current.next.data != minValue) {
+            current = current.next;
+        }
+        if (current.next != null) {
+            current.next = current.next.next;
+        }
+        return head;
     }
 
     /**
@@ -105,7 +151,22 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+        if (smallList == null && bigList == null) {
+            return true;
+        }
+        if (smallList == null || bigList == null) {
+            return false;
+        }
+        ListNode currentSmall = smallList;
+        ListNode currentBig = bigList;
+        while (currentSmall != null && currentBig != null) {
+            if (currentBig.data != 2 * currentSmall.data) {
+                return false;
+            }
+            currentSmall = currentSmall.next;
+            currentBig = currentBig.next;
+        }
+        return currentSmall == null && currentBig == null;
     }
 
     /**
@@ -123,6 +184,25 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+            if (head == null) {
+                return null;
+            }
+        int length = length(head);
+        k = k % length;
+        if (k == 0) {
+            return head;
+        }
+        ListNode current = head;
+        for (int i = 1; i < k; i++) {
+            current = current.next;
+        }
+        ListNode newHead = current.next;
+        current.next = null;
+        ListNode tail = newHead;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+        tail.next = head;
+        return newHead;
     }
 }
