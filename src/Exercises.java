@@ -83,7 +83,22 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+      
+    if (head == null) {
+        return Integer.MAX_VALUE;
+    }
+    int min = Integer.MAX_VALUE;
+    ListNode current = head;
+
+    while (current != null) {
+
+        if (current.val < min) {
+            min = current.val;
+        }
+        current = current.next;
+    }
+
+    return min;
     }
 
     /**
