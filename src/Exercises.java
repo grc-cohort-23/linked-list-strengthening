@@ -86,7 +86,7 @@ public class Exercises {
     public static int min(ListNode head) {
         int min = Integer.MAX_VALUE;
         if (head == null) {
-            return Integer.MIN_VALUE;
+            return Integer.MAX_VALUE;
         }
 
         ListNode current = head;
@@ -96,6 +96,8 @@ public class Exercises {
             if (current.data < min) {
                 min = current.data;
             }
+
+            current = current.next;
         }
 
         return min;
