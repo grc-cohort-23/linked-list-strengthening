@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSException;
+
 public class Exercises {
     /**
      * Returns a count of how many nodes are in the linked list.
@@ -12,7 +14,15 @@ public class Exercises {
      * @return the length of the list
      */
     public static int length(ListNode head) {
-        return -1;
+        
+        int count = 0;
+        ListNode current = head;
+        
+        while (current != null){
+            count++;
+            current = current.next;
+        }
+        return count;
     }
 
     /**
@@ -29,7 +39,9 @@ public class Exercises {
      * @return the new head of the linked list
      */
     public static ListNode prepend(ListNode head, int toAdd) {
-        return null;
+        ListNode newValue = new ListNode(toAdd);
+        newValue.next = head;
+        return newValue;
     }
 
     /**
