@@ -131,18 +131,19 @@ public class Exercises {
         }
         int min = min(head);
 
+        if (head.data == min) {
+            return head.next;
+        }
+
         ListNode current = head;
 
         while (current != null && current.next != null) {
             if (current.next.data == min) {
                 current.next = current.next.next; 
-
                 return head;
             } else {
                 current = current.next;
             }
-
-            
         }
 
         return head;
