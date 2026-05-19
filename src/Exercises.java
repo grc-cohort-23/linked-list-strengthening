@@ -12,7 +12,16 @@ public class Exercises {
      * @return the length of the list
      */
     public static int length(ListNode head) {
-        return -1;
+        int count = 0;
+
+        ListNode current = head;
+        while (current != null) {
+            count++;
+
+            current = current.next;
+        }
+        
+        return count;
     }
 
     /**
@@ -29,7 +38,11 @@ public class Exercises {
      * @return the new head of the linked list
      */
     public static ListNode prepend(ListNode head, int toAdd) {
-        return null;
+        ListNode newHead = new ListNode(toAdd);
+        newHead.next = head;
+
+        head = newHead;
+        return head;
     }
 
     /**
@@ -45,7 +58,22 @@ public class Exercises {
      * @return the head of the list with the last element removed
      */
     public static ListNode removeLast(ListNode head) {
-        return null;
+
+        if (head == null || head.next == null) {
+            return null;
+        }
+        ListNode current = head;
+
+        while (current != null) {
+
+            if (current.next.next == null) {
+                current.next = null;
+            }
+
+            current = current.next;
+        }
+
+        return head;
     }
 
     /**
@@ -60,7 +88,23 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+        int min = Integer.MAX_VALUE;
+        if (head == null) {
+            return Integer.MAX_VALUE;
+        }
+
+        ListNode current = head;
+        
+        while (current != null) {
+
+            if (current.data < min) {
+                min = current.data;
+            }
+
+            current = current.next;
+        }
+
+        return min;
     }
 
     /**
@@ -81,7 +125,28 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+
+        if (head == null || head.next == null) {
+            return null;
+        }
+        int min = min(head);
+
+        if (head.data == min) {
+            return head.next;
+        }
+
+        ListNode current = head;
+
+        while (current != null && current.next != null) {
+            if (current.next.data == min) {
+                current.next = current.next.next; 
+                return head;
+            } else {
+                current = current.next;
+            }
+        }
+
+        return head;
     }
 
     /**
@@ -105,7 +170,20 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+
+        if (length(smallList) != length(bigList)) {
+            return false;
+        }
+        while (smallList != null && bigList != null) {
+            if (bigList.data != smallList.data * 2) {
+                return false;
+            }
+
+            bigList = bigList.next;
+            smallList = smallList.next;
+        }
+
+        return true;
     }
 
     /**
@@ -123,6 +201,36 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+        if (head == null) {
+            return null;
+        }
+        if (k == 0) {
+            return head;
+        }
+        int n = length(head);
+        k = k % n;
+        if (k == 0) {
+            return head;
+        }
+
+        ListNode current = head;
+        //Put current on the last node before the newHead
+        for (int i = 1; i < k ; i++) {
+            current = current.next;
+        }
+
+        ListNode newHead = current.next;
+
+        //Sever the connection to the nodes that came before the newHead
+        current.next = null;
+       
+        current = newHead;
+        while(current.next != null) {
+            current = current.next;
+        }
+        //Append the old head to the end of the list
+        current.next = head;
+
+        return newHead;
     }
 }
