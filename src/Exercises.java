@@ -114,7 +114,25 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+
+        if(head == null || head.next == null){
+            return null;
+        }
+
+        int min = min(head);
+
+        if(head.data == min){
+            return head.next;
+        }
+
+        ListNode curr = head;
+
+        while(curr.next.data != min){
+            curr = curr.next;
+        }
+        curr.next = curr.next.next;
+
+        return head;
     }
 
     /**
@@ -138,7 +156,20 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+        if (smallList == null && bigList == null) {
+            return true;
+        }
+
+        while (smallList != null && bigList != null) {
+            if (bigList.data != smallList.data * 2) {
+                return false;
+            }
+
+            smallList = smallList.next;
+            bigList = bigList.next;
+        }
+
+        return smallList == null && bigList == null;
     }
 
     /**
@@ -156,6 +187,24 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+        if(head == null) { return null; }
+
+
+
+        while(k > 0) {
+            ListNode curr = head; // save old head in curr
+            curr = curr.next; 
+            
+            ListNode tail = head; // start at head of list
+            while(tail.next != null){
+                tail = tail.next; // iterate till next node is null (end of list);
+            }
+
+            tail.next = curr; // set tail to old head, curr
+            curr.next = null; // set new tail (old head)'s next node to null
+            k--; // repeats relative to kth
+        }
+
+        return head;
     }
 }
