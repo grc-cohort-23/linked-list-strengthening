@@ -12,7 +12,14 @@ public class Exercises {
      * @return the length of the list
      */
     public static int length(ListNode head) {
-        return -1;
+        ListNode current = head;
+        int counter = 0;
+        while(current != null){
+            counter++;
+            current = current.next;
+        }
+
+        return counter;
     }
 
     /**
@@ -29,7 +36,7 @@ public class Exercises {
      * @return the new head of the linked list
      */
     public static ListNode prepend(ListNode head, int toAdd) {
-        return null;
+        return new ListNode(toAdd,head);
     }
 
     /**
@@ -45,7 +52,17 @@ public class Exercises {
      * @return the head of the list with the last element removed
      */
     public static ListNode removeLast(ListNode head) {
-        return null;
+        int length = length(head);
+        if(length < 2){
+            return null;
+        }
+
+        ListNode current = head;
+        for(int i = 0; i < length-2; i++){
+            current = current.next;
+        }
+        current.next = null;
+        return head;
     }
 
     /**
@@ -60,7 +77,13 @@ public class Exercises {
      * @return the minimum value in the list 
      */
     public static int min(ListNode head) {
-        return -1;
+        int min = Integer.MAX_VALUE;
+        ListNode current = head;
+        while(current != null){
+            if(current.data < min) min = current.data;
+            current = current.next;
+        }
+        return min;
     }
 
     /**
@@ -81,7 +104,25 @@ public class Exercises {
      * @return the head of the list with the first instance of the minimum value removed
      */
     public static ListNode removeMin(ListNode head) {
-        return null;
+        if(head == null || head.next == null){
+            return null;    
+        }
+
+        int min = min(head);
+        if(head.data == min){
+            return head.next;
+        }
+        
+        ListNode current = head;
+        while(current.next != null){
+            if(current.next.data == min){
+                current.next = current.next.next;
+                return head;
+            }
+
+            current = current.next;
+        }
+        return head;
     }
 
     /**
@@ -105,7 +146,17 @@ public class Exercises {
      * @return whether the values in bigList are twice the values in smallList
      */
     public static boolean isDoubled(ListNode smallList, ListNode bigList) {
-        return false;
+
+        while(smallList != null && bigList != null){
+            if(smallList.data*2 != bigList.data) return false;
+
+            smallList = smallList.next;
+            bigList = bigList.next;
+        }
+
+        if(smallList != null || bigList != null) return false;
+
+        return true;
     }
 
     /**
@@ -123,6 +174,24 @@ public class Exercises {
      * @return the head of the new list after k rotations to the left
      */
     public static ListNode rotateLeft(ListNode head, int k) {
-        return null;
+        if(head == null)return null;
+
+        ListNode tail = head;
+
+        while(tail.next != null){
+            tail = tail.next;
+        }
+        
+
+        tail.next = head;
+
+        for(int i=0;i<k;i++){
+            tail = tail.next;
+            head = head.next;
+        }
+
+        tail.next = null;
+
+        return head;
     }
 }
